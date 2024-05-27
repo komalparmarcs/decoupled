@@ -1,0 +1,21 @@
+uuid: c51d3439-144b-4194-9b9b-21bcbeb9121a
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: VZf_tf3P8R-Dz54F3Ps5Fbn1dqwCD_zOVVLNzbaTS64
+name: 'Special offers'
+id: special_offers
+description: 'Special offers newsletter.'
+format: plain
+priority: 0
+receipt: false
+from_name: Drupal
+subject: '[[simplenews-newsletter:name]] [node:title]'
+from_address: ''
+hyperlinks: true
+allowed_handlers: {  }
+new_account: none
+access: default
+reason: ''
+weight: 0
