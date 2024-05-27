@@ -16,3 +16,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.imggridwrap {
+  @apply relative float-right w-full sm:w-[305px] ml-0 sm:ml-[50px] mb-[30px] p-0 sm:p-[15px] sm:pt-0;
+}
+
+.imggridwrap::after {
+  position: absolute;
+  width: calc(100% - 30px);
+  height: calc(100% - 15px);
+  background: #0164ae;
+  z-index: 0;
+  content: "";
+  top: 0;
+  right: 0;
+}
+
+.imggridwrap img {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
