@@ -55,7 +55,7 @@ const AppContent = () => {
           throw new Error("Failed to fetch page items");
         }
         const data = await response.json();
-        console.log('Page Data:', data); // Log the response for debugging
+        // console.log('Page Data:', data); // Log the response for debugging
         setPageNodeData(data.data);
 
         // Extract image data from included relationships
@@ -87,7 +87,7 @@ const AppContent = () => {
           matchedNode,
         };
       });
-      console.log('Matched Nodes:', matchedNodes); // Log matched nodes for debugging
+      // console.log('Matched Nodes:', matchedNodes); // Log matched nodes for debugging
       setMatchedNodes(matchedNodes);
     }
   }, [menuItems, pageNodeData, currentLanguage]);

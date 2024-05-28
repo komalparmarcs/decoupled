@@ -9,7 +9,14 @@ module.exports = {
       },
       container: {
         center: true,
-        padding: '4rem',
+        padding: {
+          DEFAULT: '1rem', // Default padding for mobile and small screens
+          sm: '1rem',
+          md: '1rem',
+          lg: '3rem', // Increased padding for larger screens
+          xl: '3rem',
+          '2xl': '3rem',
+        },
       },
       fontSize: {
         '36px': '36px',
