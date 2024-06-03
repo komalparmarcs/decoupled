@@ -10,7 +10,7 @@
 /drupal/web/sites/*/*services*.yml
 
 # Ignore paths that may contain user-generated content
-/drupal/web/sites/*/files
+# /drupal/web/sites/*/files
 /drupal/web/sites/*/public
 /drupal/web/sites/*/private
 /drupal/web/sites/*/files-public
