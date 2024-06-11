@@ -20,6 +20,12 @@ const NodeContent = ({ node, baseUrl, imageData, currentLanguage }) => {
   // Determine about image URL
   const aboutImageUrl = field_image_about.data ? imageData[field_image_about.data.id] : null;
 
+  // Function to add padding-bottom to every paragraph
+  const addPaddingBottomToParagraphs = (htmlString) => {
+    // Wrap each paragraph inside a div with padding-bottom class
+    return htmlString.replace(/<p([^>]*)>/g, '<div class="pb-3"><p$1>').replace(/<\/p>/g, '</p></div>');
+  };
+
   return (
     <div className="relative z-0">
       <BannerImage baseUrl={baseUrl} imageUrl={bannerImageUrl} />
@@ -34,7 +40,8 @@ const NodeContent = ({ node, baseUrl, imageData, currentLanguage }) => {
           <div className="imggridwrap">
             <AboutImage baseUrl={baseUrl} imageUrl={aboutImageUrl} />
           </div>
-          <div className="text-sm sm:text-base lg:text-[15px] text-justify" dangerouslySetInnerHTML={{ __html: body.value }} />
+          {/* Render body content with padding-bottom for paragraphs */}
+          <div className="text-sm sm:text-base lg:text-[15px] text-justify" dangerouslySetInnerHTML={{ __html: addPaddingBottomToParagraphs(body.value) }} />
         </div>
       </div>
     </div>

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import NodeContent from "./components/NodeContent";
+import WorkingModelContent from "./components/WorkingModelContent";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 // Define the base URL as a constant
 const BASE_URL = 'https://shiksha-drupal.ddev.site:8443';
@@ -9,7 +11,9 @@ const BASE_URL = 'https://shiksha-drupal.ddev.site:8443';
 const App = () => {
   return (
     <Router>
-      <AppContent />
+      <ErrorBoundary>
+        <AppContent />
+      </ErrorBoundary>
     </Router>
   );
 };
@@ -17,6 +21,7 @@ const App = () => {
 const AppContent = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [pageNodeData, setPageNodeData] = useState([]);
+  const [workingModelData, setWorkingModelData] = useState([]);
   const [imageData, setImageData] = useState({});
   const [matchedNodes, setMatchedNodes] = useState([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -55,7 +60,6 @@ const AppContent = () => {
           throw new Error("Failed to fetch page items");
         }
         const data = await response.json();
-        // console.log('Page Data:', data); // Log the response for debugging
         setPageNodeData(data.data);
 
         // Extract image data from included relationships
@@ -71,15 +75,40 @@ const AppContent = () => {
       }
     };
 
+    const fetchWorkingModelData = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}${currentLanguage === 'en' ? '/jsonapi' : '/hi/jsonapi'}/node/working_model?include=field_banner_image`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch working model items");
+        }
+        const data = await response.json();
+        setWorkingModelData(data.data);
+
+        // Extract image data from included relationships
+        const includedImages = data.included.reduce((acc, item) => {
+          if (item.type === 'file--file') {
+            acc[item.id] = item.attributes.uri.url;
+          }
+          return acc;
+        }, {});
+        setImageData(includedImages);
+      } catch (error) {
+        console.error("Error fetching working model items:", error);
+      }
+    };
+
     fetchPageData();
+    fetchWorkingModelData();
   }, [currentLanguage]);
 
   useEffect(() => {
-    if (menuItems.length > 0 && pageNodeData.length > 0) {
+    if (menuItems.length > 0 && (pageNodeData.length > 0 || workingModelData.length > 0)) {
       const matchedNodes = menuItems.map((menuItem) => {
         // Remove the /hi prefix from the menu item URL if present
         const url = menuItem.attributes.url.replace(/^\/hi/, '');
         const matchedNode = pageNodeData.find(
+          (node) => node.attributes.path.alias === url
+        ) || workingModelData.find(
           (node) => node.attributes.path.alias === url
         );
         return {
@@ -87,10 +116,9 @@ const AppContent = () => {
           matchedNode,
         };
       });
-      // console.log('Matched Nodes:', matchedNodes); // Log matched nodes for debugging
       setMatchedNodes(matchedNodes);
     }
-  }, [menuItems, pageNodeData, currentLanguage]);
+  }, [menuItems, pageNodeData, workingModelData, currentLanguage]);
 
   const switchLanguage = () => {
     const newLanguage = currentLanguage === 'en' ? 'hi' : 'en';
@@ -114,12 +142,25 @@ const AppContent = () => {
             <Route 
               key={index} 
               path={currentLanguage === 'en' ? menuItem.attributes.url : `/hi${menuItem.attributes.url.replace(/^\/hi/, '')}`} 
-              element={<NodeContent node={matchedNode} baseUrl={BASE_URL} imageData={imageData} currentLanguage={currentLanguage} />} 
+              element={
+                matchedNode.type === 'node--working_model'
+                  ? <WorkingModelContent 
+                      node={matchedNode} 
+                      baseUrl={BASE_URL} 
+                      imageData={imageData} 
+                      currentLanguage={currentLanguage}
+                    />
+                  : <NodeContent 
+                      node={matchedNode} 
+                      baseUrl={BASE_URL} 
+                      imageData={imageData} 
+                      currentLanguage={currentLanguage} 
+                    />
+              } 
             />
           ) : null
         ))}
       </Routes>
-      {/* <Hero /> */}
     </div>
   );
 };
