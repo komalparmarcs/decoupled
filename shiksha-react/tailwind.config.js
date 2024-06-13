@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       colors: {
         'navy-blue': '#0164ae',
+        'custom-color': '#263238',
       },
       container: {
         center: true,
@@ -19,6 +20,7 @@ module.exports = {
         },
       },
       fontSize: {
+        '30px': '30px',
         '36px': '36px',
       },
       spacing: {

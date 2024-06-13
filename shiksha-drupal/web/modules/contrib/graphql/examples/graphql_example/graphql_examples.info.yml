@@ -1,0 +1,13 @@
+name: GraphQL examples
+type: module
+description: 'Examples for the GraphQL module.'
+package: GraphQL
+dependencies:
+  - graphql:graphql
+  - node:node
+core_version_requirement: ^9.3 || ^10
+
+# Information added by Drupal.org packaging script on 2024-03-21
+version: '8.x-4.7'
+project: 'graphql'
+datestamp: 1711037109

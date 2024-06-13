@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import BannerImage from "./BannerImage";
 import SvgShikshaFlower from "./shiksha logo_flower_png.svg";
-import '../index.css'; // Import the custom CSS file
+import "../index.css"; // Import the custom CSS file
 
 const WorkingModelContent = ({ node, baseUrl, imageData, currentLanguage }) => {
   const [paragraphs, setParagraphs] = useState([]);
+  const [additionalParagraphs, setAdditionalParagraphs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -12,10 +13,17 @@ const WorkingModelContent = ({ node, baseUrl, imageData, currentLanguage }) => {
     // Fetch paragraph data
     const fetchParagraphs = async () => {
       try {
-        const response = await fetch(`${baseUrl}/jsonapi/paragraph/working_model_table_point`);
+        const response = await fetch(
+          `${baseUrl}/jsonapi/paragraph/working_model_table_point`
+        );
         const data = await response.json();
-        console.log("Fetched paragraph data:", data); // Log the data to check its structure
+        const response2 = await fetch(
+          `${baseUrl}/jsonapi/paragraph/working_model_point/?include=field_icon_with_working_model_po`
+        );
+        const data2 = await response2.json();
+        console.log("Fetched paragraph data:", data2); // Log the data to check its structure
         setParagraphs(data.data);
+        setAdditionalParagraphs(data2.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching paragraph data:", error);
@@ -45,47 +53,106 @@ const WorkingModelContent = ({ node, baseUrl, imageData, currentLanguage }) => {
   const { field_banner_image } = node.relationships;
 
   // Determine banner image URL
-  const bannerImageUrl = field_banner_image.data ? imageData[field_banner_image.data.id] : null;
+  const bannerImageUrl = field_banner_image.data
+    ? imageData[field_banner_image.data.id]
+    : null;
 
   // Function to add padding-bottom to every paragraph
   const addPaddingBottomToParagraphs = (htmlString) => {
     // Wrap each paragraph inside a div with padding-bottom class
-    return htmlString.replace(/<p([^>]*)>/g, '<div class="pb-3"><p$1>').replace(/<\/p>/g, '</p></div>');
+    return htmlString
+      .replace(/<p([^>]*)>/g, '<div class="pb-3"><p$1>')
+      .replace(/<\/p>/g, "</p></div>");
+  };
+
+  // Extracts the value from the object safely
+  const getFieldValue = (field) => {
+    if (field && field.value) {
+      return field.value;
+    }
+    return "";
   };
 
   return (
-    <div className="relative z-0">
+    <section>
       <BannerImage baseUrl={baseUrl} imageUrl={bannerImageUrl} />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-poppins font-bold uppercase relative text-navy-blue text-center section-heading">
-          {title}
-          <div className="relative flex items-center justify-center mb-4 sm:mb-6 lg:mb-8 line-with-image">
-            <img src={SvgShikshaFlower} alt="headingflower" className="h-8 sm:h-10 lg:h-12 relative z-10 bg-white p-1 sm:p-2" />
-          </div>
-        </h2>
-        <div className="mt-4 sm:mt-6 lg:mt-8 pb-8">
-          {/* Render body content with padding-bottom for paragraphs */}
-          <div className="text-sm sm:text-base lg:text-[15px] text-justify" dangerouslySetInnerHTML={{ __html: addPaddingBottomToParagraphs(body.value) }} />
-          <div className="mt-8">
-            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4">Working Model Details</h3>
-            {paragraphs.length > 0 ? (
-              paragraphs.map((paragraph) => (
-                <div key={paragraph.id} className="mb-6">
-                  <h4 className="text-lg sm:text-xl lg:text-2xl font-semibold">{paragraph.attributes.field_table_title}</h4>
-                  <ul className="list-disc ml-5">
-                    {paragraph.attributes.field_table_points.map((point, index) => (
-                      <li key={index} className="text-sm sm:text-base lg:text-[15px]">{point}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            ) : (
-              <p>No details available.</p>
-            )}
+      <div className="container">
+        <div className="relative z-0">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-poppins font-bold uppercase relative text-navy-blue text-center section-heading">
+              {title}
+              <div className="relative flex items-center justify-center mb-4 sm:mb-6 lg:mb-2 line-with-image">
+                <img
+                  src={SvgShikshaFlower}
+                  alt="headingflower"
+                  className="h-8 sm:h-10 lg:h-12 relative z-10 bg-white p-1 sm:p-2"
+                />
+              </div>
+            </h2>
+            <div className="mt-4 sm:mt-6 lg:mt-2 pb-8">
+              {/* Render body content with padding-bottom for paragraphs */}
+              <div
+                className="text-sm sm:text-base lg:text-[15px] text-center"
+                dangerouslySetInnerHTML={{
+                  __html: addPaddingBottomToParagraphs(body.value),
+                }}
+              />
+              <div className="mt-8">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4">
+                  Working Model Details
+                </h3>
+                {/* {additionalParagraphs.length > 0 ? (
+                  additionalParagraphs.map((paragraph) => (
+                    <div key={paragraph.id} className="mb-6">
+                      <div className="flex items-center mb-4">
+                        {/* {paragraph.relationships.field_icon_with_working_model_po.data && (
+                          <img
+                            src={imageData[paragraph.relationships.field_icon_with_working_model_po.data.id]}
+                            alt={paragraph.attributes.field_points_title}
+                            className="h-12 w-12 mr-4"
+                          />
+                        )} */}
+                        {/* <h4 className="text-lg sm:text-xl lg:text-2xl font-semibold">
+                          {paragraph.attributes.field_points_title}
+                        </h4>
+                      </div>
+                      <p className="text-sm sm:text-base lg:text-[15px]">
+                        {getFieldValue(paragraph.attributes.field_points_description.value)}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No details available.</p>
+                )} */} 
+                {paragraphs.length > 0 ? (
+                  paragraphs.map((paragraph) => (
+                    <div key={paragraph.id} className="mb-6">
+                      <h4 className="text-lg sm:text-xl lg:text-2xl font-semibold">
+                        {paragraph.attributes.field_table_title}
+                      </h4>
+                      <ul className="list-disc ml-5">
+                        {paragraph.attributes.field_table_points.map(
+                          (point, index) => (
+                            <li
+                              key={index}
+                              className="text-sm sm:text-base lg:text-[15px]"
+                            >
+                              {point}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  ))
+                ) : (
+                  <p>No details available.</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
