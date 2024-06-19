@@ -80,7 +80,7 @@ const ReachandImpactContent = ({ node, baseUrl, imageData, currentLanguage }) =>
   return (
     <div className="relative z-0">
       <BannerImage baseUrl={baseUrl} imageUrl={bannerImageUrl} />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-poppins font-bold uppercase relative text-navy-blue text-center section-heading">
           {title}
           <div className="relative flex items-center justify-center mb-4 sm:mb-6 lg:mb-8 line-with-image">
@@ -88,14 +88,14 @@ const ReachandImpactContent = ({ node, baseUrl, imageData, currentLanguage }) =>
           </div>
         </h2>
         <section>
-          <div className="container">
+          {/* <div className="container"> */}
             <div className="flex flex-wrap -mx-4">
               {paragraphs.length > 0 ? (
                 paragraphs.map((paragraph) => (
-                  <div className="md:w-1/4 mb-5 px-4" key={paragraph.id}>
+                  <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-5 px-4" key={paragraph.id}>
                     <div className="h-full py-10 px-2.5 w-full shadow-lg text-center font-medium text-base text-custom-color">
                       <div className="mb-6">
-                        <div className="text-[30px] text-navy-blue">
+                        <div className="text-[30px] text-navy-blue pb-4">
                           <CountAnimation value={parseInt(paragraph.attributes.field_number_of_reach_and_impact)} />
                           <sup>+</sup>
                         </div>
@@ -108,7 +108,7 @@ const ReachandImpactContent = ({ node, baseUrl, imageData, currentLanguage }) =>
                 <p>No details available.</p>
               )}
             </div>
-          </div>
+          {/* </div> */}
         </section>
       </div>
     </div>
