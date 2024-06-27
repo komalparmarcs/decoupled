@@ -127,6 +127,7 @@ class ComposerStaticInit707f7590d632e07d7add8405a30a9cb8
             'GuzzleHttp\\' => 11,
             'Grasmash\\YamlCli\\' => 17,
             'Grasmash\\Expander\\' => 18,
+            'GraphQL\\' => 8,
         ),
         'E' => 
         array (
@@ -141,6 +142,7 @@ class ComposerStaticInit707f7590d632e07d7add8405a30a9cb8
             'Drupal\\Component\\' => 17,
             'DrupalFinder\\' => 13,
             'DrupalCodeGenerator\\' => 20,
+            'Doctrine\\Inflector\\' => 19,
             'Doctrine\\Deprecations\\' => 22,
             'Doctrine\\Common\\Lexer\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
@@ -423,6 +425,10 @@ class ComposerStaticInit707f7590d632e07d7add8405a30a9cb8
         array (
             0 => __DIR__ . '/..' . '/grasmash/expander/src',
         ),
+        'GraphQL\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webonyx/graphql-php/src',
+        ),
         'Egulias\\EmailValidator\\' => 
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/src',
@@ -454,6 +460,10 @@ class ComposerStaticInit707f7590d632e07d7add8405a30a9cb8
         'DrupalCodeGenerator\\' => 
         array (
             0 => __DIR__ . '/..' . '/chi-teck/drupal-code-generator/src',
+        ),
+        'Doctrine\\Inflector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector',
         ),
         'Doctrine\\Deprecations\\' => 
         array (
