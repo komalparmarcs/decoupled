@@ -1,11 +1,11 @@
 import React from "react";
 
-const BannerImage = ({ baseUrl, imageUrl }) => {
+const BannerImagegql = ({ imageUrl }) => {
   if (!imageUrl) {
     return null;
   }
 
-  const fullImageUrl = `${baseUrl}${imageUrl}`;
+  const fullImageUrl = `${imageUrl}`;
 
   return (
     <div className="relative mb-4 pt-[72px]">
@@ -18,4 +18,4 @@ const BannerImage = ({ baseUrl, imageUrl }) => {
   );
 };
 
-export default BannerImage;
+export default BannerImagegql;

@@ -1,106 +1,40 @@
-import React, { useEffect, useState } from "react";
-import BannerImage from "./BannerImage";
+import React from 'react';
+import BannerImage from "./BannerImagegql";
 import SvgShikshaFlower from "./shiksha logo_flower_png.svg";
 import ShikshaModel from "./shiksha-model.svg";
-import "../index.css"; // Import the custom CSS file
+import "../index.css";
 import { useInView, InView } from 'react-intersection-observer';
 
-const WorkingModelContent = ({ node, baseUrl, imageData, currentLanguage }) => {
-  const [paragraphs, setParagraphs] = useState([]);
-  const [additionalParagraphs, setAdditionalParagraphs] = useState([]);
-  const [includedData, setIncludedData] = useState({});
-  const [loadingParagraphs, setLoadingParagraphs] = useState(true);
-  const [loadingAdditional, setLoadingAdditional] = useState(true);
-  const [errorParagraphs, setErrorParagraphs] = useState(null);
-  const [errorAdditional, setErrorAdditional] = useState(null);
+const WorkingModelContent = ({ baseUrl, currentLanguage, workingModelData }) => {
+  return (
+    <div>
+      {workingModelData.length > 0 ? (
+        workingModelData.map((node) => (
+          <SingleWorkingModelContent
+            key={node.id}
+            node={node}
+            baseUrl={baseUrl}
+            currentLanguage={currentLanguage}
+          />
+        ))
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
+};
 
-  useEffect(() => {
-    const fetchParagraphs = async () => {
-      try {
-        const response = await fetch(
-          `${baseUrl}${currentLanguage === 'en' ? '/jsonapi' : '/hi/jsonapi'}/paragraph/working_model_table_point`
-        );
-        const data = await response.json();
-        setParagraphs(data.data);
-        setLoadingParagraphs(false);
-      } catch (error) {
-        console.error("Error fetching paragraph data:", error);
-        setErrorParagraphs(error);
-        setLoadingParagraphs(false);
-      }
-    };
-
-    fetchParagraphs();
-  }, [baseUrl]);
-
-  useEffect(() => {
-    const fetchAdditionalParagraphs = async () => {
-      try {
-        const response2 = await fetch(
-          `${baseUrl}${currentLanguage === 'en' ? '/jsonapi' : '/hi/jsonapi'}/paragraph/working_model_point/?include=field_icon_with_working_model_po`
-        );
-        const data2 = await response2.json();
-
-        // Create a map of included data
-        const includedMap = data2.included.reduce((acc, item) => {
-          acc[item.id] = item.attributes.uri.url;
-          return acc;
-        }, {});
-
-        setAdditionalParagraphs(data2.data);
-        setIncludedData(includedMap);
-        setLoadingAdditional(false);
-      } catch (error) {
-        console.error("Error fetching additional paragraph data:", error);
-        setErrorAdditional(error);
-        setLoadingAdditional(false);
-      }
-    };
-
-    fetchAdditionalParagraphs();
-  }, [baseUrl]);
-
-  if (loadingParagraphs || loadingAdditional) {
-    return <div>Loading...</div>;
-  }
-
-  if (errorParagraphs) {
-    return <div>Error loading paragraph data: {errorParagraphs.message}</div>;
-  }
-
-  if (errorAdditional) {
-    return (
-      <div>
-        Error loading additional paragraph data: {errorAdditional.message}
-      </div>
-    );
-  }
-
-  if (!node) {
-    return <div>Loading...</div>;
-  }
-
-  const { title, body } = node.attributes;
-  const { field_banner_image } = node.relationships;
-  const bannerImageUrl = field_banner_image.data
-    ? imageData[field_banner_image.data.id]
-    : null;
-
-  // Function to add padding-bottom to every paragraph
-  const addPaddingBottomToParagraphs = (htmlString) => {
-    return htmlString
-      .replace(/<p([^>]*)>/g, '<div class="pb-3"><p$1>')
-      .replace(/<\/p>/g, "</p></div>");
-  };
+const SingleWorkingModelContent = ({ node, baseUrl, currentLanguage }) => {
+  const { title, body, bannerImage, workingModelPointsSecti, workingModelTableSectio } = node.attributes;
 
   const colors = ["border-color-1", "border-color-2", "border-color-3"];
-  const bg_color = ["bg-color-1", "bg-color-2", "bg-color-3"];
-  const textColors = ["text-color-1", "text-color-2", "text-color-3"]; // Add text color classes here
+  const bg_colors = ["bg-color-1", "bg-color-2", "bg-color-3"];
+  const textColors = ["text-color-1", "text-color-2", "text-color-3"];
 
   return (
     <section>
       <div className="relative z-0">
-        <BannerImage baseUrl={baseUrl} imageUrl={bannerImageUrl} />
+        <BannerImage imageUrl={bannerImage} />
         <div className="container">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-poppins font-bold uppercase relative text-navy-blue text-center section-heading">
             {title}
@@ -113,15 +47,12 @@ const WorkingModelContent = ({ node, baseUrl, imageData, currentLanguage }) => {
             </div>
           </h2>
           <div className="mt-4 sm:mt-6 lg:mt-2 pb-8">
-            {/* Render body content with padding-bottom for paragraphs */}
             <div
               className="text-sm sm:text-base lg:text-[15px] text-center"
-              dangerouslySetInnerHTML={{
-                __html: addPaddingBottomToParagraphs(body.value),
-              }}
+              dangerouslySetInnerHTML={{ __html: body }}
             />
             <div className="text-center mobileview pt-40 relative">
-              <div className="w-full  flex justify-center items-center">
+              <div className="w-full flex justify-center items-center">
                 <InView triggerOnce>
                   {({ inView, ref }) => (
                     <figure ref={ref} className={`relative animate-zoomIn ${inView ? 'visible' : ''}`}>
@@ -137,16 +68,9 @@ const WorkingModelContent = ({ node, baseUrl, imageData, currentLanguage }) => {
                   )}
                 </InView>
               </div>
-              {additionalParagraphs.length > 0 ? (
-                additionalParagraphs.map((paragraph, index) => {
-                  const iconData =
-                    paragraph.relationships.field_icon_with_working_model_po
-                      ?.data;
-                  const iconUrl = iconData
-                    ? `${baseUrl}${includedData[iconData.id]}`
-                    : null;
-
-                  const delay = (index + 1) * 500; // Incremental delay for each item
+              {workingModelPointsSecti.length > 0 ? (
+                workingModelPointsSecti.map((paragraph, index) => {
+                  const delay = (index + 1) * 500;
                   let animationClass = "";
                   let positionClass = "";
 
@@ -161,10 +85,9 @@ const WorkingModelContent = ({ node, baseUrl, imageData, currentLanguage }) => {
                     positionClass = "sm:absolute sm:top-[185px] sm:left-0 sm:w-[30%] sm:text-left";
                   }
 
-                  const textColorClass = textColors[index % textColors.length]; // Assign text color based on index
+                  const textColorClass = textColors[index % textColors.length];
 
-                  // Determine Tailwind classes based on index
-                  const paragraphfirst = index === 0 ? "max-w-[600px] inline-block" : "";
+                  const paragraphFirst = index === 0 ? "max-w-[600px] inline-block" : "";
                   return (
                     <InView key={paragraph.id} triggerOnce>
                       {({ inView, ref }) => (
@@ -176,18 +99,18 @@ const WorkingModelContent = ({ node, baseUrl, imageData, currentLanguage }) => {
                             <h3
                               className={`text-lg sm:text-xl lg:text-2xl leading-normal tracking-tight mb-1 font-bold ${textColorClass}`}
                             >
-                              {iconUrl && (
+                              {paragraph.iconWithWorkingModelPo?.url && (
                                 <img
-                                  src={iconUrl}
-                                  alt={paragraph.attributes.field_points_title}
+                                  src={paragraph.iconWithWorkingModelPo.url}
+                                  alt={paragraph.pointsTitle}
                                   className="w-8 mr-2 inline"
                                 />
                               )}
-                              {paragraph.attributes.field_points_title}
+                              {paragraph.pointsTitle}
                             </h3>
                           </div>
-                          <p className={`text-sm sm:text-base lg:text-[15px] ${paragraphfirst}`}>
-                            {paragraph.attributes.field_points_description}
+                          <p className={`text-sm sm:text-base lg:text-[15px] ${paragraphFirst}`}>
+                            {paragraph.pointsDescription}
                           </p>
                         </div>
                       )}
@@ -198,48 +121,42 @@ const WorkingModelContent = ({ node, baseUrl, imageData, currentLanguage }) => {
                 <p>No details available.</p>
               )}
             </div>
-            </div>
-            </div>
-            <div className="bg-gray-300">
-            <div className="container">
-              <div className="flex flex-wrap bg-gray-300 pt-14">
-                {paragraphs.length > 0 ? (
-                  paragraphs.map((paragraph, index) => (
-                    <div key={paragraph.id} className={`md:w-1/3 mb-5 px-3`}>
-                      <div
-                        className={`border rounded-t-md h-full ${
-                          colors[index % colors.length]
-                        }`}
+          </div>
+        </div>
+        <div className="bg-gray-300">
+          <div className="container">
+            <div className="flex flex-wrap pt-14">
+              {workingModelTableSectio.length > 0 ? (
+                workingModelTableSectio.map((tableSection, index) => (
+                  <div key={tableSection.id} className={`md:w-1/3 mb-5 px-3`}>
+                    <div
+                      className={`border rounded-t-md h-full ${colors[index % colors.length]}`}
+                    >
+                      <h3
+                        className={`text-center text-white text-xl mb-5 p-2.5 rounded-t-md uppercase ${bg_colors[index % bg_colors.length]}`}
                       >
-                        <h3
-                          className={`text-center text-white text-xl mb-5 p-2.5 rounded-t-md uppercase ${
-                            bg_color[index % colors.length]
-                          }`}
-                        >
-                          {paragraph.attributes.field_table_title}
-                        </h3>
-                        <ul className="px-3">
-                          {paragraph.attributes.field_table_points.map(
-                            (point, index) => (
-                              <li
-                                key={index}
-                                className={`py-1 text-base ${index === paragraph.attributes.field_table_points.length - 1 ? '' : 'border-b '} ${colors[index % colors.length]}`}
-                              >
-                                {point}
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
+                        {tableSection.tableTitle}
+                      </h3>
+                      <ul className="px-3">
+                        {tableSection.tablePoints.map((point, idx) => (
+                          <li
+                            key={idx}
+                            className={`py-1 text-base ${idx === tableSection.tablePoints.length - 1 ? '' : 'border-b'} ${colors[idx % colors.length]}`}
+                          >
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  ))
-                ) : (
-                  <p>No details available.</p>
-                )}
-              </div>
-            </div>
+                  </div>
+                ))
+              ) : (
+                <p>No details available.</p>
+              )}
             </div>
           </div>
+        </div>
+      </div>
     </section>
   );
 };

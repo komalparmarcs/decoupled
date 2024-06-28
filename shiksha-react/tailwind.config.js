@@ -7,7 +7,6 @@ module.exports = {
       colors: {
         'navy-blue': '#0164ae',
         'custom-color': '#263238',
-        // 'gray':'#eceff1',
         'color-1': '#FF4B10',
         'color-2': '#08BC14',
         'color-3': '#0164AE',
@@ -42,7 +41,7 @@ module.exports = {
         zoomIn: 'zoomIn 2.5s ease-in-out forwards',
         fadeInUp: 'fadeInUp 2.5s ease-out',
         fadeInLeft: 'fadeInLeft 2.5s ease-out',
-        fadeInRight: 'fadeInLeft 2.5s ease-out',
+        fadeInRight: 'fadeInRight 2.5s ease-out',
       },
       keyframes: {
         zoomIn: {
@@ -66,22 +65,6 @@ module.exports = {
         fadeInRight: {
           '0%': { opacity: '0', transform: 'translateX(-20px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            fontSize: '18px',
-            lineHeight: '1.4',
-            p: {
-              marginTop: '0',
-              marginBottom: '0',
-            },
-            h1: {
-              marginTop: '0',
-              marginBottom: '0.5em',
-            },
-          },
         },
       },
     },
@@ -111,6 +94,19 @@ module.exports = {
           right: '0',
           height: '1px',
           backgroundColor: '#f9a123',
+        },
+        '.transition-custom': {
+          transition: 'all 0.5s ease-in-out',
+        },
+        '.right-border-around::after': {
+          position: 'absolute',
+          width: 'calc(100% - 30px)',
+          height: 'calc(100% - 15px)',
+          backgroundColor: '#0164ae',
+          zIndex: '0',
+          content: '""',
+          top: '0',
+          right: '0',
         },
       };
       addUtilities(newUtilities, ['before', 'after']);
