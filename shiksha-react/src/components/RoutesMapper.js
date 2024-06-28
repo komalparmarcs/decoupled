@@ -11,7 +11,7 @@ import { useBaseUrl } from '../contexts/BaseUrlContext';
 const RoutesMapper = ({ matchedNodes, imageData, currentLanguage, leadershipData }) => {
   const BASE_URL = useBaseUrl();
 
-  console.log('Matched Nodes:', matchedNodes);
+  // console.log('Matched Nodes:', matchedNodes);
 
   return (
     <Routes>

@@ -19,8 +19,8 @@ const VisionandMissionDataFetcher = ({ setVisionandMissionData }) => {
           points: node.visionAndMissionPoint, // Corrected points key
         },
       }));
-      console.log('Raw Query Data:', VisionandMissionQueryData);
-      console.log('Formatted Data:', formattedVisionandMissionData);
+      // console.log('Raw Query Data:', VisionandMissionQueryData);
+      // console.log('Formatted Data:', formattedVisionandMissionData);
       setVisionandMissionData(formattedVisionandMissionData);
       setLoading(false);
     }
