@@ -19,8 +19,8 @@ const WorkingModelDataFetcher = ({ setWorkingModelData }) => {
           workingModelTableSectio: node.workingModelTableSectio,
         },
       }));
-      console.log('Raw Query Data:', WorkingModelQueryData);
-      console.log('Formatted Data:', formattedWorkingModelData);
+      // console.log('Raw Query Data:', WorkingModelQueryData);
+      // console.log('Formatted Data:', formattedWorkingModelData);
       setWorkingModelData(formattedWorkingModelData);
     }
   }, [WorkingModelQueryData, setWorkingModelData]);
