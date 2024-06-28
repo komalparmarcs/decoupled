@@ -1,33 +1,38 @@
-import { useEffect } from 'react';
-import { useBaseUrl } from '../../contexts/BaseUrlContext';
+import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import WorkingModelQuery from '../Queries/WorkingModelQuery';
 
-const WorkingModelDataFetcher = ({ setWorkingModelData, setImageData, currentLanguage }) => {
-  const BASE_URL = useBaseUrl();
+const WorkingModelDataFetcher = ({ setWorkingModelData }) => {
+  const { data: WorkingModelQueryData, loading: queryLoading, error } = useQuery(WorkingModelQuery);
 
   useEffect(() => {
-    const fetchWorkingModelData = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}${currentLanguage === 'en' ? '/jsonapi' : '/hi/jsonapi'}/node/working_model?include=field_banner_image`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch working model items");
-        }
-        const data = await response.json();
-        setWorkingModelData(data.data);
+    if (WorkingModelQueryData) {
+      const formattedWorkingModelData = WorkingModelQueryData.nodeWorkingModels.nodes.map((node) => ({
+        id: node.id,
+        type: node.__typename,
+        attributes: {
+          path: { alias: node.path },
+          title: node.title,
+          bannerImage: node.bannerImage ? node.bannerImage.url : '',
+          body: node.body ? node.body.value : '',
+          workingModelPointsSecti: node.workingModelPointsSecti,
+          workingModelTableSectio: node.workingModelTableSectio,
+        },
+      }));
+      console.log('Raw Query Data:', WorkingModelQueryData);
+      console.log('Formatted Data:', formattedWorkingModelData);
+      setWorkingModelData(formattedWorkingModelData);
+    }
+  }, [WorkingModelQueryData, setWorkingModelData]);
 
-        const includedImages = data.included.reduce((acc, item) => {
-          if (item.type === 'file--file') {
-            acc[item.id] = item.attributes.uri.url;
-          }
-          return acc;
-        }, {});
-        setImageData(prevImageData => ({ ...prevImageData, ...includedImages }));
-      } catch (error) {
-        console.error("Error fetching working model items:", error);
-      }
-    };
+  if (queryLoading) {
+    return <div>Loading Working Model data...</div>;
+  }
 
-    fetchWorkingModelData();
-  }, [currentLanguage, setWorkingModelData, setImageData, BASE_URL]);
+  if (error) {
+    console.error('Error fetching Working Model data:', error);
+    return <div>Error fetching Working Model data. Please try again later.</div>;
+  }
 
   return null;
 };

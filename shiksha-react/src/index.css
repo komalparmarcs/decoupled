@@ -45,4 +45,14 @@ img {
 *, ::after, ::before {
   box-sizing: border-box;
 }
-
+@media screen and (max-width: 767px) {
+.mobileview { 
+    padding-top: 2rem;
+}
+.mobileview figure {
+  margin: 0 25% 30px;
+}
+.mobileview figure figcaption {
+  font-size: 22px;
+}
+ }

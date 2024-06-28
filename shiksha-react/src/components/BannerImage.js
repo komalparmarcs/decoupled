@@ -8,7 +8,7 @@ const BannerImage = ({ baseUrl, imageUrl }) => {
   const fullImageUrl = `${baseUrl}${imageUrl}`;
 
   return (
-    <div className="relative mb-4 pt-16">
+    <div className="relative mb-4 pt-[72px]">
       <img
         src={fullImageUrl}
         alt="Banner"
