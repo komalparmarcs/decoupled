@@ -1,0 +1,18 @@
+uuid: 6a0de12f-a2cc-4691-b425-a0ba7d930016
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.reach_and_impact
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.reach_and_impact
+target_entity_type_id: node
+target_bundle: reach_and_impact
+default_langcode: site_default
+language_alterable: true

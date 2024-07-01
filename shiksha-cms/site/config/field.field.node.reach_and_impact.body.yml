@@ -1,0 +1,24 @@
+uuid: bc5b2fbb-a2b5-44ae-97ac-3c76b6367752
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.reach_and_impact
+  module:
+    - text
+id: node.reach_and_impact.body
+field_name: body
+entity_type: node
+bundle: reach_and_impact
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

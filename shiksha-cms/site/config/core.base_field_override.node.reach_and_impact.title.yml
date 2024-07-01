@@ -1,0 +1,18 @@
+uuid: 92a1f8a8-0a3b-4829-89a6-218a178dcef1
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.reach_and_impact
+id: node.reach_and_impact.title
+field_name: title
+entity_type: node
+bundle: reach_and_impact
+label: Title
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

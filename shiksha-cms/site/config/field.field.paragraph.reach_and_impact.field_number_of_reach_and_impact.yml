@@ -1,0 +1,23 @@
+uuid: ac368045-03d7-441c-9c94-210f66bf88a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_number_of_reach_and_impact
+    - paragraphs.paragraphs_type.reach_and_impact
+id: paragraph.reach_and_impact.field_number_of_reach_and_impact
+field_name: field_number_of_reach_and_impact
+entity_type: paragraph
+bundle: reach_and_impact
+label: 'Number of Reach and Impact'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

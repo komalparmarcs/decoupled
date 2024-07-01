@@ -1,0 +1,31 @@
+uuid: 9fe70708-1ea9-4062-aa6c-e5a990cc6f8a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.reach_and_impact.field_number_of_reach_and_impact
+    - field.field.paragraph.reach_and_impact.field_title_of_reach_and_impact
+    - paragraphs.paragraphs_type.reach_and_impact
+id: paragraph.reach_and_impact.default
+targetEntityType: paragraph
+bundle: reach_and_impact
+mode: default
+content:
+  field_number_of_reach_and_impact:
+    type: number
+    weight: 0
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_title_of_reach_and_impact:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

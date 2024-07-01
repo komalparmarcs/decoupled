@@ -1,0 +1,19 @@
+uuid: 9ae442b0-a41d-4aa6-8d25-7b5e42e4951e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_table_points
+    - paragraphs.paragraphs_type.working_model_table_point
+id: paragraph.working_model_table_point.field_table_points
+field_name: field_table_points
+entity_type: paragraph
+bundle: working_model_table_point
+label: 'Table Points'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

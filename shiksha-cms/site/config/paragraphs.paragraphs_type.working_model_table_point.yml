@@ -1,0 +1,10 @@
+uuid: 1c2c32b6-4654-4c62-80dd-3ecabda0f051
+langcode: en
+status: true
+dependencies: {  }
+id: working_model_table_point
+label: 'Working Model Table Point'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

@@ -1,0 +1,58 @@
+uuid: 0da9cae3-ae66-4d55-8990-f29c5facb3f6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.reach_and_impact.body
+    - field.field.node.reach_and_impact.field_banner_image
+    - field.field.node.reach_and_impact.field_reach_and_impact
+    - image.style.banner_image
+    - node.type.reach_and_impact
+  module:
+    - entity_reference_revisions
+    - svg_image
+    - text
+    - user
+id: node.reach_and_impact.default
+targetEntityType: node
+bundle: reach_and_impact
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_banner_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: banner_image
+      image_loading:
+        attribute: lazy
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_reach_and_impact:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

@@ -1,0 +1,8 @@
+uuid: 6eb2e4e4-399b-4896-bcfa-1e61af434872
+langcode: en
+status: true
+dependencies: {  }
+name: Post
+vid: post
+description: ''
+weight: 0

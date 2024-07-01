@@ -1,0 +1,10 @@
+uuid: c0d767a0-a78b-4582-90c3-374649e9f650
+langcode: en
+status: true
+dependencies: {  }
+id: reach_and_impact
+label: 'Reach and Impact'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

@@ -1,0 +1,11 @@
+uuid: 1ee1a86f-f24e-4f6e-9722-55356125883c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.vission_and_mission
+id: node.vission_and_mission
+target_entity_type_id: node
+target_bundle: vission_and_mission
+default_langcode: site_default
+language_alterable: false

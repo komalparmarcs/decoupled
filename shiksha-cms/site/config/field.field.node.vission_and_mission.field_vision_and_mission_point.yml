@@ -1,0 +1,37 @@
+uuid: efecd834-6695-4b4e-91a6-d70f6231f6ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vision_and_mission_point
+    - node.type.vission_and_mission
+    - paragraphs.paragraphs_type.working_model_point
+  module:
+    - entity_reference_revisions
+id: node.vission_and_mission.field_vision_and_mission_point
+field_name: field_vision_and_mission_point
+entity_type: node
+bundle: vission_and_mission
+label: 'Vision and mission point '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      working_model_point: working_model_point
+    negate: 0
+    target_bundles_drag_drop:
+      reach_and_impact:
+        weight: 4
+        enabled: false
+      working_model_point:
+        weight: 5
+        enabled: true
+      working_model_table_point:
+        weight: 6
+        enabled: false
+field_type: entity_reference_revisions
