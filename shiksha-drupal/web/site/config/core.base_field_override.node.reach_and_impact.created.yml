@@ -1,0 +1,18 @@
+uuid: 001a1f15-25ef-4973-b7ed-2a3040b9d43d
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.reach_and_impact
+id: node.reach_and_impact.created
+field_name: created
+entity_type: node
+bundle: reach_and_impact
+label: 'Authored on'
+description: 'The date and time that the content was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

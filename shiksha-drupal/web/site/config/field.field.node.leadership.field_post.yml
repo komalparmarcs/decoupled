@@ -1,0 +1,19 @@
+uuid: 97b5a3e9-562f-4937-991e-84c925d09c64
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_post
+    - node.type.leadership
+id: node.leadership.field_post
+field_name: field_post
+entity_type: node
+bundle: leadership
+label: Post
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

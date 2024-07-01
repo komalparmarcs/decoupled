@@ -1,0 +1,58 @@
+uuid: cf230780-728a-4879-8882-0bf76e913580
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.vission_and_mission.body
+    - field.field.node.vission_and_mission.field_banner_image
+    - field.field.node.vission_and_mission.field_vision_and_mission_point
+    - image.style.banner_image
+    - node.type.vission_and_mission
+  module:
+    - entity_reference_revisions
+    - svg_image
+    - text
+    - user
+id: node.vission_and_mission.default
+targetEntityType: node
+bundle: vission_and_mission
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_banner_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: banner_image
+      image_loading:
+        attribute: lazy
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_vision_and_mission_point:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

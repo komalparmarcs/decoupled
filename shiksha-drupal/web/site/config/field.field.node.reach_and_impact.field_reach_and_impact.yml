@@ -1,0 +1,37 @@
+uuid: dbf4537d-f9fa-439e-b9f5-24a290342e6c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_reach_and_impact
+    - node.type.reach_and_impact
+    - paragraphs.paragraphs_type.reach_and_impact
+  module:
+    - entity_reference_revisions
+id: node.reach_and_impact.field_reach_and_impact
+field_name: field_reach_and_impact
+entity_type: node
+bundle: reach_and_impact
+label: 'Reach and Impact'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      reach_and_impact: reach_and_impact
+    negate: 0
+    target_bundles_drag_drop:
+      reach_and_impact:
+        weight: 4
+        enabled: true
+      working_model_point:
+        weight: 5
+        enabled: false
+      working_model_table_point:
+        weight: 6
+        enabled: false
+field_type: entity_reference_revisions

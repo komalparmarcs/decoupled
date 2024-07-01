@@ -1,0 +1,22 @@
+uuid: ca13c81f-4611-4cbc-981c-41399022fa68
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.working_model
+id: node.working_model.status
+field_name: status
+entity_type: node
+bundle: working_model
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

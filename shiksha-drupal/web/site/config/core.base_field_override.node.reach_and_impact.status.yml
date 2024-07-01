@@ -1,0 +1,22 @@
+uuid: 8cbf6e3e-63ce-42b1-8447-2fa92231344a
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.reach_and_impact
+id: node.reach_and_impact.status
+field_name: status
+entity_type: node
+bundle: reach_and_impact
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

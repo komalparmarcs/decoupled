@@ -1,0 +1,35 @@
+uuid: b5b7e4ef-0185-4cc8-acb8-8ef57d518f9c
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.reach_and_impact.body
+    - field.field.node.reach_and_impact.field_banner_image
+    - field.field.node.reach_and_impact.field_reach_and_impact
+    - node.type.reach_and_impact
+  module:
+    - text
+    - user
+id: node.reach_and_impact.teaser
+targetEntityType: node
+bundle: reach_and_impact
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_banner_image: true
+  field_reach_and_impact: true
+  langcode: true
