@@ -1,0 +1,3 @@
+[submodule "shiksha-cms/shiksha-cms"]
+	path = shiksha-cms/shiksha-cms
+	url = https://gitlab.com/web-application2055919/shiksha-cms.git
